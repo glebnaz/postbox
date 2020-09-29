@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/glebnaz/postbox/internal/mongo"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"log"
 )
 
