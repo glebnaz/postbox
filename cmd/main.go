@@ -1,6 +1,9 @@
 package main
 
-import "github.com/glebnaz/postbox/cmd/config"
+import (
+	"github.com/glebnaz/postbox/cmd/config"
+	"github.com/glebnaz/postbox/cmd/server"
+)
 
 var (
 	Version = "NO VERSION SET"
@@ -11,4 +14,6 @@ var (
 func main() {
 	var conf config.Config
 	conf.Init()
+
+	server.InitServer(conf.DBURL, conf.User, conf.Pass)
 }

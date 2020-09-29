@@ -10,6 +10,7 @@ type Config struct {
 	PORT        string `envconfig:"PORT" default:":7755"`
 	User        string `envconfig:"USER"`
 	Pass        string `envconfig:"PASS"`
+	DBURL       string `envconfig:"DB_URL"`
 	TemplateDir string `envconfig:"TEMP_DIR" default:"emails"`
 }
 

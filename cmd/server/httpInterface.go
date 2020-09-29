@@ -10,8 +10,11 @@ type response struct {
 
 func (s *Server) initRouter() {
 	s.router = echo.New()
-	//configure groups
 
+	//get tokens endpoint
+	s.router.GET("/token", s.getToken)
+
+	//configure groups
 	s.configureEmailGroup()
 	s.configureUserGroup()
 }
@@ -19,7 +22,6 @@ func (s *Server) initRouter() {
 func (s *Server) configureUserGroup() {
 	userGroup := s.router.Group("/users")
 	userGroup.Use(s.middleWare)
-
 }
 
 func (s *Server) configureEmailGroup() {
