@@ -10,8 +10,8 @@ const errBadConnectionToStore = "Bad Connection to Store"
 
 //Server main struct of App
 //include router as echo
-//include Store,ass connection to mongo DB
-//Include User and Pass for service
+//include Store,as connection to mongo DB
+//include User and Pass for service
 type Server struct {
 	router *echo.Echo
 	Store  *mongo.MongoDB
@@ -30,6 +30,11 @@ func (s Server) GetCred() (string, string) {
 //user and pass is a cred to access server
 func InitServer(dbURl string, user, pass string) Server {
 	var s Server
+
+	//init cred
+	s.user = user
+	s.pass = pass
+
 	var err error
 	s.Store, err = mongo.NewConnection(dbURl)
 	if err != nil {
@@ -43,5 +48,8 @@ func InitServer(dbURl string, user, pass string) Server {
 //use echo Start function
 func (s *Server) Run(port string) {
 	s.initRouter()
-	s.router.Start(port)
+	err := s.router.Start(port)
+	if err != nil {
+		panic(err)
+	}
 }

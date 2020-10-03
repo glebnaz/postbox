@@ -8,16 +8,18 @@ import (
 
 const banner = `
 Hi, i'm your postman!
+ _______
+/O     O\
+  \ - /
+
+Created by GlebNaz!
 
 Version: %s
 Build: %s
-____________________________________O/_______
-                                    O\
 `
 
 var (
 	Version = "NO VERSION SET"
-	Commit  = "NO COMMIT SET"
 	Build   = "NO BUILD SET"
 )
 
