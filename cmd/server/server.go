@@ -42,5 +42,6 @@ func InitServer(dbURl string, user, pass string) Server {
 //Run start server
 //use echo Start function
 func (s *Server) Run(port string) {
+	s.initRouter()
 	s.router.Start(port)
 }

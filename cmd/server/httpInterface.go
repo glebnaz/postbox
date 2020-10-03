@@ -1,6 +1,9 @@
 package server
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
+)
 
 type response struct {
 	Status string      `json:"status,omitempty"`
@@ -10,6 +13,8 @@ type response struct {
 
 func (s *Server) initRouter() {
 	s.router = echo.New()
+	s.router.Debug = false
+	s.router.Logger.SetLevel(log.OFF)
 
 	//get tokens endpoint
 	s.router.GET("/token", s.getToken)
