@@ -1,4 +1,4 @@
-package user
+package entities
 
 //User is entity type
 //with this struct you can send email

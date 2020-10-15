@@ -1,42 +1,26 @@
 package server
 
 import (
-	"github.com/glebnaz/postbox/internal/entities/user"
-	locUser "github.com/glebnaz/postbox/internal/logics/user"
-	"github.com/glebnaz/postbox/internal/mongo"
+	"github.com/glebnaz/postbox/internal/logics"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
-type UserRepository struct {
-	coll string
-	db   *mongo.MongoDB
-}
-
-func initUserRepo(db *mongo.MongoDB) UserRepository {
-	return UserRepository{coll: user.Collection, db: db}
-}
-
-func (u UserRepository) Get(ids ...string) ([]user.User, error) {
-	return nil, nil
-}
-
-func (u UserRepository) Insert(object user.User) error {
-	return nil
-}
-
-func (u UserRepository) Update(object user.User) error {
-	return nil
-}
-
-func (u UserRepository) Delete(id string) (user.User, error) {
-	return user.User{}, nil
-}
-
+//UserHandler implements a method for returning, updating and deleting users
 func (s Server) UserHandler(c echo.Context) error {
-	repo := initUserRepo(s.Store)
+	repo := logics.InitUserRepo(s.Store)
+	var err error
 	if c.Request().Method == http.MethodGet {
-		locUser.Get(repo)
+		var req logics.UserReq
+		err = c.Bind(&req)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, logics.UserResp{Status: "error", Error: err.Error()})
+		}
+		users, err := logics.GetUsers(repo, req)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, logics.UserResp{Status: "error", Error: err.Error()})
+		}
+		return c.JSON(http.StatusOK, logics.UserResp{Status: "success", Users: users})
 	}
-	return nil
+	return c.JSON(http.StatusMethodNotAllowed, logics.UserResp{Status: "error"})
 }

@@ -5,12 +5,6 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-type response struct {
-	Status string      `json:"status,omitempty"`
-	Error  string      `json:"error,omitempty"`
-	Data   interface{} `json:"data,omitempty"`
-}
-
 func (s *Server) initRouter() {
 	s.router = echo.New()
 	s.router.Debug = false
