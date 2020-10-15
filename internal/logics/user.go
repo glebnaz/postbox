@@ -3,6 +3,7 @@ package logics
 import (
 	"errors"
 	"fmt"
+
 	"github.com/glebnaz/postbox/internal/entities"
 )
 

@@ -1,9 +1,10 @@
 package server
 
 import (
+	"log"
+
 	"github.com/glebnaz/postbox/internal/mongo"
 	"github.com/labstack/echo/v4"
-	"log"
 )
 
 const errBadConnectionToStore = "Bad Connection to Store"
@@ -28,7 +29,7 @@ func (s Server) GetCred() (string, string) {
 //InitServer init new Server,return Server
 //user pass is field from config
 //user and pass is a cred to access server
-func InitServer(dbURl string, user, pass string) Server {
+func InitServer(dbURL string, user, pass string) Server {
 	var s Server
 
 	//init cred
@@ -36,7 +37,7 @@ func InitServer(dbURl string, user, pass string) Server {
 	s.pass = pass
 
 	var err error
-	s.Store, err = mongo.NewConnection(dbURl)
+	s.Store, err = mongo.NewConnection(dbURL)
 	if err != nil {
 		log.Printf("Error When Connection to Store %v\n", err)
 		log.Panic(errBadConnectionToStore)

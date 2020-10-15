@@ -1,12 +1,13 @@
 package test
 
 import (
-	"github.com/glebnaz/postbox/internal/secure"
-	"github.com/stretchr/testify/assert"
 	"math/rand"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/glebnaz/postbox/internal/secure"
+	"github.com/stretchr/testify/assert"
 )
 
 const userTestValue = "glebnaz"

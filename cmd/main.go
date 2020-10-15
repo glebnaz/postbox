@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/glebnaz/postbox/cmd/config"
 	"github.com/glebnaz/postbox/cmd/server"
 )
