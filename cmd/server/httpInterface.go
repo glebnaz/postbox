@@ -19,9 +19,7 @@ func (s *Server) initRouter() {
 }
 
 func (s *Server) configureUserGroup() {
-	s.router.GET("users", func(c echo.Context) error {
-		return c.JSON(200, "OK")
-	}, s.middleWare)
+	s.router.Any("users", s.UserHandler, s.middleWare)
 }
 
 func (s *Server) configureEmailGroup() {

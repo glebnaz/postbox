@@ -4,15 +4,16 @@ import (
 	"github.com/glebnaz/postbox/internal/entities"
 	"github.com/glebnaz/postbox/internal/mongo"
 	"github.com/globalsign/mgo/bson"
+	"github.com/google/uuid"
 )
 
 type UserRepository struct {
 	coll string
-	db   *mongo.MongoDB
+	db   *mongo.DB
 }
 
 //InitUserRepo create UserRepo
-func InitUserRepo(db *mongo.MongoDB) UserRepository {
+func InitUserRepo(db *mongo.DB) UserRepository {
 	return UserRepository{coll: entities.Collection, db: db}
 }
 
@@ -30,7 +31,7 @@ func (u UserRepository) Get(ids []string) ([]entities.User, error) {
 				"$in": ids,
 			},
 		}
-		err := u.db.Find(u.coll, q, users)
+		err := u.db.Find(u.coll, q, &users)
 		if err != nil {
 			return nil, err
 		}
@@ -39,7 +40,8 @@ func (u UserRepository) Get(ids []string) ([]entities.User, error) {
 }
 
 func (u UserRepository) Insert(object entities.User) error {
-	return nil
+	object.ID = uuid.New().String()
+	return u.db.Insert(u.coll, object)
 }
 
 func (u UserRepository) Update(object entities.User) error {

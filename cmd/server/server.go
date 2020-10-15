@@ -14,7 +14,7 @@ const errBadConnectionToStore = "Bad Connection to Store"
 //include User and Pass for service
 type Server struct {
 	router *echo.Echo
-	Store  *mongo.MongoDB
+	Store  *mongo.DB
 	user   string
 	pass   string
 }

@@ -2,14 +2,15 @@ package mongo
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"time"
 )
 
-//MongoDB is connection struct to mongoDB
+//DB is connection struct to mongoDB
 //use mgo
-type MongoDB struct {
+type DB struct {
 	sess *mgo.Session
 }
 
@@ -19,11 +20,11 @@ const (
 
 const errIsNotConnected = "Mongo is not Connected"
 
-//NewConnection return new MongoDB connection
+//NewConnection return new DB connection
 //connection with url
 //in url must be pass and user if needed
-func NewConnection(url string) (*MongoDB, error) {
-	var db = MongoDB{}
+func NewConnection(url string) (*DB, error) {
+	var db = DB{}
 	var err error
 	db.sess, err = mgo.DialWithTimeout(url, connectionTimeout)
 	if err != nil {
@@ -33,13 +34,13 @@ func NewConnection(url string) (*MongoDB, error) {
 }
 
 //IsConnected check connection to mongo db Server
-func (db *MongoDB) IsConnected() bool {
+func (db *DB) IsConnected() bool {
 	return db.sess != nil
 }
 
 //Insert insert document to collection
 //if collection is not created this function create collection
-func (db *MongoDB) Insert(coll string, v ...interface{}) error {
+func (db *DB) Insert(coll string, v ...interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}
@@ -50,7 +51,7 @@ func (db *MongoDB) Insert(coll string, v ...interface{}) error {
 }
 
 //Find find document in collection
-func (db *MongoDB) Find(coll string, query map[string]interface{}, v interface{}) error {
+func (db *DB) Find(coll string, query map[string]interface{}, v interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}
@@ -67,7 +68,7 @@ func (db *MongoDB) Find(coll string, query map[string]interface{}, v interface{}
 }
 
 //FindByID find document by ID
-func (db *MongoDB) FindByID(coll string, id string, v interface{}) bool {
+func (db *DB) FindByID(coll string, id string, v interface{}) bool {
 	if !db.IsConnected() {
 		return false
 	}
@@ -78,7 +79,7 @@ func (db *MongoDB) FindByID(coll string, id string, v interface{}) bool {
 }
 
 //FindAll find all document in collection
-func (db *MongoDB) FindAll(coll string, v interface{}) error {
+func (db *DB) FindAll(coll string, v interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}
@@ -90,7 +91,7 @@ func (db *MongoDB) FindAll(coll string, v interface{}) error {
 
 //FindWithQuery you can call this function with query
 //you can must use mgo.bson format
-func (db *MongoDB) FindWithQuery(coll string, query interface{}, v interface{}) error {
+func (db *DB) FindWithQuery(coll string, query interface{}, v interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}
@@ -102,7 +103,7 @@ func (db *MongoDB) FindWithQuery(coll string, query interface{}, v interface{}) 
 
 //FindWithQueryAll you can find all document in collection with this function
 //you can call this function with mgo.bson query
-func (db *MongoDB) FindWithQueryAll(coll string, query interface{}, v interface{}) error {
+func (db *DB) FindWithQueryAll(coll string, query interface{}, v interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}
@@ -113,7 +114,7 @@ func (db *MongoDB) FindWithQueryAll(coll string, query interface{}, v interface{
 }
 
 //RemoveWithIDs delete all document in collection by ids
-func (db *MongoDB) RemoveWithIDs(coll string, ids interface{}) error {
+func (db *DB) RemoveWithIDs(coll string, ids interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}
@@ -127,7 +128,7 @@ func (db *MongoDB) RemoveWithIDs(coll string, ids interface{}) error {
 
 //Update document by query
 //warning you can update all document with this query
-func (db *MongoDB) Update(coll string, query interface{}, set interface{}) error {
+func (db *DB) Update(coll string, query interface{}, set interface{}) error {
 	if !db.IsConnected() {
 		return fmt.Errorf("%s", errIsNotConnected)
 	}

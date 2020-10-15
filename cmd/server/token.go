@@ -1,9 +1,10 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/glebnaz/postbox/internal/secure"
 	"github.com/labstack/echo/v4"
-	"net/http"
 )
 
 const (
