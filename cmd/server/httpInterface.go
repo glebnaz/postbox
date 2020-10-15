@@ -25,8 +25,9 @@ func (s *Server) initRouter() {
 }
 
 func (s *Server) configureUserGroup() {
-	userGroup := s.router.Group("/users")
-	userGroup.Use(s.middleWare)
+	s.router.GET("users", func(c echo.Context) error {
+		return c.JSON(200, "OK")
+	}, s.middleWare)
 }
 
 func (s *Server) configureEmailGroup() {
