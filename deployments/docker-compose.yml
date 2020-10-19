@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - /user/lib/mongo/data:/data/db
+    logging:
+      driver: "none"
+
+  postbox:
+    build: .
+    environment:
+      DB_ADDR: db/postbox
+      USER: postbox
+      PASS: postbox
+    entrypoint: /usr/bin/postbox
+    ports:
+      - 7755:7755
