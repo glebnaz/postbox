@@ -1,4 +1,4 @@
-package test
+package secure
 
 import (
 	"math/rand"
