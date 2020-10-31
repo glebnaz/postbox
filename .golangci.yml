@@ -1,21 +1,12 @@
 linters:
   disable-all: true
   enable:
-    - bodyclose
-    - deadcode
-    - errcheck
-    - exhaustive
-    - funlen
-    - gochecknoinits
-    - goconst
-    - gocyclo
-    - gofmt
     - goimports
     - golint
-    - gosec
-    - gosimple
-    - stylecheck
-    - typecheck
-    - unconvert
-    - unparam
-    - unused
+    - govet
+    - errcheck
+linters-settings:
+  govet:
+    check-shadowing: true
+issues:
+  exclude-use-default: false

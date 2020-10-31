@@ -15,6 +15,7 @@ func GetUsers(repository entities.UserRepository, request UserReq) ([]entities.U
 	return repository.Get(request.IDs)
 }
 
+//InsertUsers insert user handler
 func InsertUsers(repository entities.UserRepository, request UserReq) error {
 	//validate users
 	if len(request.Users) == 0 {

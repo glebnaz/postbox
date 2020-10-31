@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
+//UserRepository interface to storage user Data
 type UserRepository struct {
 	coll string
 	db   *mongo.DB
@@ -39,15 +40,18 @@ func (u UserRepository) Get(ids []string) ([]entities.User, error) {
 	return users, nil
 }
 
+//Insert User to store,return error
 func (u UserRepository) Insert(object entities.User) error {
 	object.ID = uuid.New().String()
 	return u.db.Insert(u.coll, object)
 }
 
+//Update user in store by id? remove user with this id,and create new
 func (u UserRepository) Update(object entities.User) error {
 	return nil
 }
 
+//Delete users by ids,return users and error
 func (u UserRepository) Delete(ids []string) (entities.User, error) {
 	return entities.User{}, nil
 }
