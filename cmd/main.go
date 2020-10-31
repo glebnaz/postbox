@@ -20,8 +20,10 @@ Build: %s
 `
 
 var (
+	//Version is lbsflag
 	Version = "NO VERSION SET"
-	Build   = "NO BUILD SET"
+	//Build is lbsflag
+	Build = "NO BUILD SET"
 )
 
 func main() {

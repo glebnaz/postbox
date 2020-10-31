@@ -10,9 +10,8 @@ import (
 //UserHandler implements a method for returning, updating and deleting users
 func (s Server) UserHandler(c echo.Context) error {
 	repo := logics.InitUserRepo(s.Store)
-	var err error
 	var req logics.UserReq
-	err = c.Bind(&req)
+	err := c.Bind(&req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, logics.UserResp{Status: "error", Error: err.Error()})
 	}
@@ -26,7 +25,7 @@ func (s Server) UserHandler(c echo.Context) error {
 		}
 		return c.JSON(http.StatusOK, logics.UserResp{Status: "success", Users: users})
 	case http.MethodPost:
-		err = logics.InsertUsers(repo, req)
+		err := logics.InsertUsers(repo, req)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, logics.UserResp{Status: "error", Error: err.Error()})
 		}
