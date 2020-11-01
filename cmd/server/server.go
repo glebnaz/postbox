@@ -1,8 +1,9 @@
 package server
 
 import (
-	"github.com/glebnaz/postbox/internal/errors"
 	"log"
+
+	"github.com/glebnaz/postbox/internal/errors"
 
 	"github.com/glebnaz/postbox/internal/mongo"
 	"github.com/labstack/echo/v4"

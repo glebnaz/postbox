@@ -3,6 +3,8 @@ package logics
 import (
 	"fmt"
 
+	"github.com/labstack/gommon/log"
+
 	"github.com/glebnaz/postbox/internal/entities"
 	"github.com/glebnaz/postbox/internal/errors"
 )
@@ -34,6 +36,21 @@ func InsertUsers(repository entities.UserRepository, request UserReq) error {
 		}
 		err := repository.Insert(v)
 		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+//UpdateUsers update users handler
+func UpdateUsers(repository entities.UserRepository, request UserReq) error {
+	if len(request.Users) == 0 {
+		return errors.EmptyUsers
+	}
+	for i, v := range request.Users {
+		err := repository.Update(v)
+		if err != nil {
+			log.Printf("Error when Update User %v\n", i)
 			return err
 		}
 	}

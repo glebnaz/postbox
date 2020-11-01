@@ -53,6 +53,20 @@ func (u UserRepository) Insert(object entities.User) error {
 
 //Update user in store by id? remove user with this id,and create new
 func (u UserRepository) Update(object entities.User) error {
+	if len(object.ID) == 0 {
+		return errors.EmptyUsersIDs
+	}
+	set := bson.M{
+		"name":         object.Name,
+		"smtp_host":    object.SMTPHost,
+		"smtp_address": object.SMTPAddress,
+		"smtp_user":    object.SMTPUser,
+		"smtp_pass":    object.SMTPPass,
+	}
+	err := u.db.Update(u.coll, object.ID, set)
+	if err != nil {
+		return errors.DataBaseOperation.New(err)
+	}
 	return nil
 }
 
