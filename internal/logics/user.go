@@ -1,13 +1,11 @@
 package logics
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/glebnaz/postbox/internal/entities"
+	"github.com/glebnaz/postbox/internal/errors"
 )
-
-const emptyUsersError = "empty users"
 
 //GetUsers return users,find by ids
 //if ids is empty get all users
@@ -19,7 +17,7 @@ func GetUsers(repository entities.UserRepository, request UserReq) ([]entities.U
 func InsertUsers(repository entities.UserRepository, request UserReq) error {
 	//validate users
 	if len(request.Users) == 0 {
-		return errors.New(emptyUsersError)
+		return errors.EmptyUsersIDs
 	}
 	for i, v := range request.Users {
 		if len(v.SMTPAddress) == 0 {

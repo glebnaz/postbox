@@ -9,4 +9,6 @@ const (
 	EntityCode = 3
 	//InternalCode code for internal problems
 	InternalCode = 4
+	//SecureCode code for bad cred or bad token
+	SecureCode = 5
 )

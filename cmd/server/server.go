@@ -1,13 +1,12 @@
 package server
 
 import (
+	"github.com/glebnaz/postbox/internal/errors"
 	"log"
 
 	"github.com/glebnaz/postbox/internal/mongo"
 	"github.com/labstack/echo/v4"
 )
-
-const errBadConnectionToStore = "Bad Connection to Store"
 
 //Server main struct of App
 //include router as echo
@@ -39,8 +38,7 @@ func InitServer(dbURL string, user, pass string) Server {
 	var err error
 	s.Store, err = mongo.NewConnection(dbURL)
 	if err != nil {
-		log.Printf("Error When Connection to Store %v\n", err)
-		log.Panic(errBadConnectionToStore)
+		log.Panic(errors.DataBaseConnection.New(err))
 	}
 	return s
 }

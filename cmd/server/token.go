@@ -1,15 +1,11 @@
 package server
 
 import (
+	"github.com/glebnaz/postbox/internal/errors"
 	"net/http"
 
 	"github.com/glebnaz/postbox/internal/secure"
 	"github.com/labstack/echo/v4"
-)
-
-const (
-	errBadCred      = "Bad Credentials"
-	errUnauthorized = "Bad token, or token is empty"
 )
 
 type tokenRequest struct {
@@ -27,11 +23,11 @@ func (s Server) getToken(c echo.Context) error {
 	var req tokenRequest
 	err := c.Bind(&req)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, tokenResponse{Error: err.Error()})
+		return c.JSON(http.StatusBadRequest, tokenResponse{Error: errors.Unauthorized.New(err).Error()})
 	}
 	user, pass := s.GetCred()
 	if user != req.User || pass != req.Pass {
-		return c.JSON(http.StatusUnauthorized, tokenResponse{Error: errBadCred})
+		return c.JSON(http.StatusUnauthorized, tokenResponse{Error: errors.BadCred.Error()})
 	}
 	jwt := secure.GenerateJWT(user, pass)
 	return c.JSON(http.StatusOK, tokenResponse{Token: jwt})
@@ -43,7 +39,7 @@ func (s Server) middleWare(handlerFunc echo.HandlerFunc) echo.HandlerFunc {
 		user, pass := s.GetCred()
 		token := c.QueryParam("token")
 		if !secure.ValidateJWT(token, user, pass) {
-			return c.JSON(http.StatusUnauthorized, tokenResponse{Error: errUnauthorized})
+			return c.JSON(http.StatusUnauthorized, tokenResponse{Error: errors.Unauthorized.Error()})
 		}
 		return handlerFunc(c)
 	}

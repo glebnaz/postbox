@@ -2,6 +2,7 @@ package logics
 
 import (
 	"github.com/glebnaz/postbox/internal/entities"
+	"github.com/glebnaz/postbox/internal/errors"
 	"github.com/glebnaz/postbox/internal/mongo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/google/uuid"
@@ -24,7 +25,7 @@ func (u UserRepository) Get(ids []string) ([]entities.User, error) {
 	if len(ids) == 0 {
 		err := u.db.FindAll(u.coll, &users)
 		if err != nil {
-			return nil, err
+			return nil, errors.DataBaseOperation.New(err)
 		}
 	} else {
 		q := bson.M{
@@ -34,7 +35,7 @@ func (u UserRepository) Get(ids []string) ([]entities.User, error) {
 		}
 		err := u.db.Find(u.coll, q, &users)
 		if err != nil {
-			return nil, err
+			return nil, errors.DataBaseOperation.New(err)
 		}
 	}
 	return users, nil
@@ -43,7 +44,11 @@ func (u UserRepository) Get(ids []string) ([]entities.User, error) {
 //Insert User to store,return error
 func (u UserRepository) Insert(object entities.User) error {
 	object.ID = uuid.New().String()
-	return u.db.Insert(u.coll, object)
+	err := u.db.Insert(u.coll, object)
+	if err != nil {
+		return errors.DataBaseOperation.New(err)
+	}
+	return nil
 }
 
 //Update user in store by id? remove user with this id,and create new

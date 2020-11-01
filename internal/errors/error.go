@@ -1,6 +1,9 @@
 package errors
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 //Exception custom error type
 type Exception struct {
@@ -10,7 +13,9 @@ type Exception struct {
 }
 
 //New return new Error with err as DevMessage
+//and log dev error by log
 func (e Exception) New(err error) Exception {
+	log.Printf("Code: %v;\n Message: %v\n", e.Code, err)
 	e.DevMessage = err.Error()
 	return e
 }
