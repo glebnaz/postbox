@@ -35,8 +35,14 @@ func (s Server) UserHandler(c echo.Context) error {
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, logics.UserResp{Status: "error", Error: err.Error()})
 		}
+		return c.JSON(http.StatusOK, logics.UserResp{Status: "success"})
+	case http.MethodDelete:
+		err := logics.DeleteUsers(repo, req)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, logics.UserResp{Status: "error", Error: err.Error()})
+		}
+		return c.JSON(http.StatusOK, logics.UserResp{Status: "success"})
 	default:
 		return c.JSON(http.StatusMethodNotAllowed, logics.UserResp{Status: "error"})
 	}
-	return nil
 }

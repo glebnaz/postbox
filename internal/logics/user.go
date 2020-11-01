@@ -56,3 +56,11 @@ func UpdateUsers(repository entities.UserRepository, request UserReq) error {
 	}
 	return nil
 }
+
+//DeleteUsers delete users handler
+func DeleteUsers(repository entities.UserRepository, request UserReq) error {
+	if len(request.IDs) == 0 {
+		return errors.EmptyUsersIDs
+	}
+	return repository.Delete(request.IDs)
+}

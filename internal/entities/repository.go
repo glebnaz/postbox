@@ -7,5 +7,5 @@ type UserRepository interface {
 	Get(ids []string) ([]User, error)
 	Insert(object User) error
 	Update(object User) error
-	Delete(ids []string) (User, error)
+	Delete(ids []string) error
 }

@@ -71,6 +71,10 @@ func (u UserRepository) Update(object entities.User) error {
 }
 
 //Delete users by ids,return users and error
-func (u UserRepository) Delete(ids []string) (entities.User, error) {
-	return entities.User{}, nil
+func (u UserRepository) Delete(ids []string) error {
+	err := u.db.RemoveWithIDs(u.coll, ids)
+	if err != nil {
+		return errors.DataBaseOperation.New(err)
+	}
+	return nil
 }
