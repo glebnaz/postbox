@@ -20,7 +20,7 @@ func TestUserRepoGet(t *testing.T) {
 
 	//insert all data to collection
 	for _, user := range users {
-		err := sess.Insert("postbox_users", user)
+		err = sess.Insert("postbox_users", user)
 		assert.NoError(err)
 	}
 
