@@ -33,6 +33,6 @@ func TestUserRepoGet(t *testing.T) {
 	assert.NoError(err)
 	assert.Equal(usersInDB, users)
 
-	err := sess.RemoveWithIDs("postbox_users", ids)
+	err = sess.RemoveWithIDs("postbox_users", ids)
 	assert.NoError(err)
 }
